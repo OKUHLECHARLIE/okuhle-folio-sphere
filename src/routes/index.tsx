@@ -97,10 +97,7 @@ function Portfolio() {
       {/* NAV */}
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <button onClick={() => goTo("home")} className="flex items-center gap-3 min-w-0">
-            <img src={profileUrl} alt="Okuhle Charlie" className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-accent/60" />
-            <span className="truncate font-display text-base font-bold">Okuhle Charlie</span>
-          </button>
+          <div className="min-w-0" />
 
           <nav className="hidden lg:flex items-center gap-1">
             {NAV.map((n) => (
@@ -171,17 +168,17 @@ function Hero() {
       <div className="absolute inset-0 -z-10 opacity-40 [background:radial-gradient(60%_50%_at_20%_30%,color-mix(in_oklab,var(--sky)_45%,transparent),transparent),radial-gradient(50%_40%_at_85%_70%,color-mix(in_oklab,var(--sky)_30%,transparent),transparent)]" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
         <div className="text-center lg:text-left animate-fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-sky-200">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
             <Sparkles className="h-3.5 w-3.5" /> Available for opportunities
           </span>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-6xl">
             Okuhle Charlie
           </h1>
-          <p className="mt-2 text-lg font-semibold text-[color:var(--sky)]">CAPACITI Intern</p>
-          <p className="mt-4 font-display text-xl italic text-white/85">
+          <p className="mt-2 text-lg font-bold text-[color:var(--sky)]">CAPACITI Intern</p>
+          <p className="mt-4 font-display text-xl font-semibold italic text-white">
             “In everything you do, AIM HIGH!”
           </p>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 lg:max-w-none">
+          <p className="mt-6 max-w-xl text-base font-medium leading-relaxed text-white lg:max-w-none">
             Passionate about Artificial Intelligence, Networking, and Digital Transformation.
             I am committed to developing innovative technology solutions that create real-world impact.
           </p>
@@ -189,16 +186,9 @@ function Hero() {
             <a
               href="/Okuhle-Charlie-CV.txt"
               download
-              className="inline-flex h-11 items-center gap-2 rounded-md bg-[var(--sky)] px-6 text-sm font-semibold text-[var(--navy)] shadow-glow transition-transform hover:scale-[1.02]"
+              className="inline-flex h-11 items-center gap-2 rounded-md bg-[var(--sky)] px-6 text-sm font-bold text-[var(--navy)] shadow-glow transition-transform hover:scale-[1.02]"
             >
               <Download className="h-4 w-4" /> Download CV
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-              className="inline-flex h-11 items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Get in touch
             </a>
           </div>
         </div>
@@ -665,18 +655,6 @@ function Footer({ goTo }: { goTo: (id: string) => void }) {
     <footer className="bg-[var(--navy)] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <div className="flex items-center gap-3">
-            <img src={profileUrl} alt="Okuhle Charlie" className="h-12 w-12 rounded-full object-cover ring-2 ring-[var(--sky)]" />
-            <div>
-              <p className="font-display text-lg font-bold">Okuhle Charlie</p>
-              <p className="text-xs text-white/60">CAPACITI Intern</p>
-            </div>
-          </div>
-          <p className="mt-4 max-w-xs text-sm text-white/70">
-            AI, Networking & Digital Transformation. In everything you do, AIM HIGH.
-          </p>
-        </div>
-        <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Quick Links</p>
           <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
             {NAV.map((n) => (
@@ -685,12 +663,15 @@ function Footer({ goTo }: { goTo: (id: string) => void }) {
           </ul>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Contact</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Contact Details</p>
           <ul className="mt-4 space-y-2 text-sm text-white/80">
             <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> charlieokuhle4@gmail.com</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4" /> 068 374 4420</li>
           </ul>
-          <div className="mt-5 flex gap-3">
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Social Media</p>
+          <div className="mt-4 flex gap-3">
             <a href="https://github.com/OKUHLECHARLIE" target="_blank" rel="noreferrer" aria-label="GitHub" className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[color:var(--sky)] hover:text-[var(--navy)]"><Github className="h-5 w-5" /></a>
             <a href="https://www.linkedin.com/in/okuhle-charlie-b360743a1/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[color:var(--sky)] hover:text-[var(--navy)]"><Linkedin className="h-5 w-5" /></a>
           </div>
