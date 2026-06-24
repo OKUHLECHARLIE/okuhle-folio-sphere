@@ -1,0 +1,17 @@
+Okuhle Charlie - Curriculum Vitae
+
+Email: charlieokuhle4@gmail.com
+Phone: 068 374 4420
+GitHub: https://github.com/OKUHLECHARLIE
+LinkedIn: https://www.linkedin.com/in/okuhle-charlie-b360743a1/
+
+Education
+- 2023–2025  Nelson Mandela University — Diploma in Information Technology (Communication Networks)
+- 2018–2022  Gonubie High School — National Senior Certificate
+
+Experience
+- Apr 2026 – Present  Intern, CAPACITI
+
+Skills
+Artificial Intelligence, Machine Learning, Network Engineering, Cybersecurity,
+Prompt Engineering, Python, C#, SQL, Cisco Packet Tracer.
