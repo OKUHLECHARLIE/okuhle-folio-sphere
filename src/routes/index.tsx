@@ -97,10 +97,7 @@ function Portfolio() {
       {/* NAV */}
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <button onClick={() => goTo("home")} className="flex items-center gap-3 min-w-0">
-            <img src={profileUrl} alt="Okuhle Charlie" className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-accent/60" />
-            <span className="truncate font-display text-base font-bold">Okuhle Charlie</span>
-          </button>
+          <div className="min-w-0" />
 
           <nav className="hidden lg:flex items-center gap-1">
             {NAV.map((n) => (
