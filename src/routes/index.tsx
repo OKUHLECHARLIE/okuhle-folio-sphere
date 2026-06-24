@@ -655,18 +655,6 @@ function Footer({ goTo }: { goTo: (id: string) => void }) {
     <footer className="bg-[var(--navy)] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <div className="flex items-center gap-3">
-            <img src={profileUrl} alt="Okuhle Charlie" className="h-12 w-12 rounded-full object-cover ring-2 ring-[var(--sky)]" />
-            <div>
-              <p className="font-display text-lg font-bold">Okuhle Charlie</p>
-              <p className="text-xs text-white/60">CAPACITI Intern</p>
-            </div>
-          </div>
-          <p className="mt-4 max-w-xs text-sm text-white/70">
-            AI, Networking & Digital Transformation. In everything you do, AIM HIGH.
-          </p>
-        </div>
-        <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Quick Links</p>
           <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
             {NAV.map((n) => (
@@ -675,12 +663,15 @@ function Footer({ goTo }: { goTo: (id: string) => void }) {
           </ul>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Contact</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Contact Details</p>
           <ul className="mt-4 space-y-2 text-sm text-white/80">
             <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> charlieokuhle4@gmail.com</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4" /> 068 374 4420</li>
           </ul>
-          <div className="mt-5 flex gap-3">
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Social Media</p>
+          <div className="mt-4 flex gap-3">
             <a href="https://github.com/OKUHLECHARLIE" target="_blank" rel="noreferrer" aria-label="GitHub" className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[color:var(--sky)] hover:text-[var(--navy)]"><Github className="h-5 w-5" /></a>
             <a href="https://www.linkedin.com/in/okuhle-charlie-b360743a1/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[color:var(--sky)] hover:text-[var(--navy)]"><Linkedin className="h-5 w-5" /></a>
           </div>
