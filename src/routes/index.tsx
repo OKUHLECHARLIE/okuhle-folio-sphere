@@ -168,17 +168,17 @@ function Hero() {
       <div className="absolute inset-0 -z-10 opacity-40 [background:radial-gradient(60%_50%_at_20%_30%,color-mix(in_oklab,var(--sky)_45%,transparent),transparent),radial-gradient(50%_40%_at_85%_70%,color-mix(in_oklab,var(--sky)_30%,transparent),transparent)]" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
         <div className="text-center lg:text-left animate-fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-sky-200">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
             <Sparkles className="h-3.5 w-3.5" /> Available for opportunities
           </span>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-6xl">
             Okuhle Charlie
           </h1>
-          <p className="mt-2 text-lg font-semibold text-[color:var(--sky)]">CAPACITI Intern</p>
-          <p className="mt-4 font-display text-xl italic text-white/85">
+          <p className="mt-2 text-lg font-bold text-[color:var(--sky)]">CAPACITI Intern</p>
+          <p className="mt-4 font-display text-xl font-semibold italic text-white">
             “In everything you do, AIM HIGH!”
           </p>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 lg:max-w-none">
+          <p className="mt-6 max-w-xl text-base font-medium leading-relaxed text-white lg:max-w-none">
             Passionate about Artificial Intelligence, Networking, and Digital Transformation.
             I am committed to developing innovative technology solutions that create real-world impact.
           </p>
@@ -186,16 +186,9 @@ function Hero() {
             <a
               href="/Okuhle-Charlie-CV.txt"
               download
-              className="inline-flex h-11 items-center gap-2 rounded-md bg-[var(--sky)] px-6 text-sm font-semibold text-[var(--navy)] shadow-glow transition-transform hover:scale-[1.02]"
+              className="inline-flex h-11 items-center gap-2 rounded-md bg-[var(--sky)] px-6 text-sm font-bold text-[var(--navy)] shadow-glow transition-transform hover:scale-[1.02]"
             >
               <Download className="h-4 w-4" /> Download CV
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-              className="inline-flex h-11 items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Get in touch
             </a>
           </div>
         </div>
