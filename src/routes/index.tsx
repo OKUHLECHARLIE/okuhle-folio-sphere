@@ -17,6 +17,10 @@ import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
 
 const profileUrl = profileImg;
+const certificateAssetModules = import.meta.globEager("../assets/*.{pdf,jpg,png}") as Record<string, { default: string }>;
+const certificateAssetUrls = Object.fromEntries(
+  Object.entries(certificateAssetModules).map(([path, mod]) => [path.split("/").pop()!, mod.default])
+) as Record<string, string>;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -408,40 +412,40 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 /* ───────────── CERTIFICATIONS ───────────── */
-const CERT_CATEGORIES: { name: string; issuer: string; items: string[] }[] = [
+const CERT_CATEGORIES: { name: string; issuer: string; items: Array<string | { title: string; asset?: string }> }[] = [
   {
     name: "Candidate Professional Development",
     issuer: "CAPACITI",
     items: [
-      "Write Professional Emails in English",
-      "Verbal Communications and Presentation Skills",
-      "Active Listening: Enhancing Communication Skills",
-      "Developing Interpersonal Skills",
-      "Work Smarter, Not Harder: Time Management for Personal & Professional Productivity",
-      "Emotional Intelligence in the Workplace",
-      "Finding Your Professional Voice: Confidence & Impact",
-      "Introduction to Personal Branding",
-      "Leading with Impact: Team Dynamics, Strategy and Ethics",
-      "Financial Planning for Young Adults",
+      { title: "Write Professional Emails in English", asset: "Write Professional Emails in English.pdf" },
+      { title: "Verbal Communications and Presentation Skills", asset: "Verbal Communications and Presentation Skills.pdf" },
+      { title: "Active Listening: Enhancing Communication Skills", asset: "Active Listening Enhancing Communication Skills.pdf" },
+      { title: "Developing Interpersonal Skills", asset: "Developing Interpersonal Skills.pdf" },
+      { title: "Work Smarter, Not Harder: Time Management for Personal & Professional Productivity", asset: "Work Smarter, Not Harder Time Management for Personal & Professional Productivity.pdf" },
+      { title: "Emotional Intelligence in the Workplace", asset: "Emotional Intelligence in the Workplace.pdf" },
+      { title: "Finding Your Professional Voice: Confidence & Impact", asset: "Finding Your Professional Voice Confidence & Impact.pdf" },
+      { title: "Introduction to Personal Branding", asset: "Introduction to Personal Branding.pdf" },
+      { title: "Leading with Impact: Team Dynamics, Strategy and Ethics", asset: "Leading with Impact Team Dynamics, Strategy and Ethics.pdf" },
+      { title: "Financial Planning for Young Adults", asset: "Financial Planning for Young Adults.pdf" },
     ],
   },
   {
     name: "AI Bootcamp",
     issuer: "CAPACITI / Coursera",
     items: [
-      "Generative AI: Prompt Engineering Basics",
-      "AI For Everyone",
+      { title: "Generative AI: Prompt Engineering Basics", asset: "Generative AI_Prompt Engineering Basics.pdf" },
+      { title: "AI For Everyone", asset: "AI For Everyone.pdf" },
       "Introduction to Artificial Intelligence",
-      "Introduction to Generative AI",
-      "AI Essentials",
-      "Generative AI with Large Language Models",
-      "AI Foundations: Prompt Engineering with ChatGPT",
+      { title: "Introduction to Generative AI", asset: "Introduction to Generative AI.pdf" },
+      { title: "AI Essentials", asset: "AI Essentials.pdf" },
+      { title: "Generative AI with Large Language Models", asset: "Generative AI with Large Language Models.pdf" },
+      { title: "AI Foundations: Prompt Engineering with ChatGPT", asset: "AI Foundations Prompt Engineering with ChatGPT.pdf" },
       "Python for Data Science, AI and Development",
-      "Supervised Machine Learning: Regression and Classification",
-      "Advanced Learning Algorithms",
-      "Unsupervised Learning, Recommenders, Reinforcement Learning",
-      "Trustworthy AI: Managing Bias, Ethics and Accountability",
-      "Introduction to Responsible AI",
+      { title: "Supervised Machine Learning: Regression and Classification", asset: "Supervised Machine Learning Regression and Classification.pdf" },
+      { title: "Advanced Learning Algorithms", asset: "Advanced Learning Algorithms.pdf" },
+      { title: "Unsupervised Learning, Recommenders, Reinforcement Learning", asset: "Unsupervised Learning, Recommenders, Reinforcement Learning.pdf" },
+      { title: "Trustworthy AI: Managing Bias, Ethics and Accountability", asset: "Trustworthy AI Managing Bias, Ethics, and Accountability.pdf" },
+      { title: "Introduction to Responsible AI", asset: "Introduction to Responsible AI.pdf" },
     ],
   },
   {
@@ -453,7 +457,7 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: string[] }[] = [
       "Discover the Art of Prompting",
       "Use AI Responsibly",
       "Stay Ahead of the AI Curve",
-      "Google AI Essentials",
+      { title: "Google AI Essentials", asset: "AI Essentials.pdf" },
     ],
   },
   {
@@ -474,8 +478,8 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: string[] }[] = [
 ];
 
 function Certifications() {
-  const [viewing, setViewing] = useState<{ title: string; issuer: string } | null>(null);
-
+  const [viewing, setViewing] = useState<{ title: string; issuer: string; asset?: string } | null>(null);
+  const assetUrl = viewing?.asset ? certificateAssetUrls[viewing.asset] : undefined;
   return (
     <section id="certifications" className="section-pad bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -483,7 +487,15 @@ function Certifications() {
 
         <div className="mt-12 space-y-14">
           {CERT_CATEGORIES.map((cat) => (
-            <CategoryCarousel key={cat.name} category={cat} onView={(title) => setViewing({ title, issuer: cat.issuer })} />
+            <CategoryCarousel
+              key={cat.name}
+              category={cat}
+              onView={(item) => {
+                const title = typeof item === "string" ? item : item.title;
+                const asset = typeof item === "string" ? undefined : item.asset;
+                setViewing({ title, issuer: cat.issuer, asset });
+              }}
+            />
           ))}
         </div>
       </div>
@@ -497,23 +509,47 @@ function Certifications() {
                   <p className="truncate font-semibold">{viewing.title}</p>
                   <p className="truncate text-xs text-slate-700 dark:text-muted-foreground">{viewing.issuer}</p>
                 </div>
-                <a
-                  href={`data:text/plain;charset=utf-8,${encodeURIComponent(`${viewing.title} — ${viewing.issuer}\n\nCertificate file placeholder.`)}`}
-                  download={`${viewing.title}.txt`}
-                  className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
-                  aria-label="Download certificate"
-                >
-                  <Download className="h-4 w-4" /> Download
-                </a>
+                {assetUrl ? (
+                  <a
+                    href={assetUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    download={viewing?.asset}
+                    className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
+                    aria-label="Download certificate"
+                  >
+                    <Download className="h-4 w-4" /> Download
+                  </a>
+                ) : (
+                  <a
+                    href={`data:text/plain;charset=utf-8,${encodeURIComponent(`${viewing?.title} — ${viewing?.issuer}\n\nCertificate file placeholder.`)}`}
+                    download={`${viewing?.title}.txt`}
+                    className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
+                    aria-label="Download certificate"
+                  >
+                    <Download className="h-4 w-4" /> Download
+                  </a>
+                )}
               </div>
               <div className="grid place-items-center bg-muted/30 p-10 min-h-[60vh]">
                 <div className="w-full max-w-xl rounded-xl border-2 border-dashed border-border bg-card p-10 text-center">
-                  <FileText className="mx-auto h-12 w-12 text-accent" />
-                  <h4 className="mt-4 font-display text-xl font-bold">{viewing.title}</h4>
-                  <p className="mt-1 text-sm text-slate-700 dark:text-muted-foreground">Issued by {viewing.issuer}</p>
-                  <p className="mt-6 text-xs text-slate-700 dark:text-muted-foreground">
-                    Certificate preview placeholder. Upload the actual PDF/JPG/PNG file to display it here.
-                  </p>
+                  {assetUrl ? (
+                    (() => {
+                      if (assetUrl.toLowerCase().endsWith('.pdf')) {
+                        return <iframe src={assetUrl} title={viewing?.title ?? "Certificate"} className="w-full h-[60vh] rounded" />;
+                      }
+                      return <img src={assetUrl} alt={viewing?.title} className="mx-auto max-h-[60vh] object-contain" />;
+                    })()
+                  ) : (
+                    <>
+                      <FileText className="mx-auto h-12 w-12 text-accent" />
+                      <h4 className="mt-4 font-display text-xl font-bold">{viewing.title}</h4>
+                      <p className="mt-1 text-sm text-slate-700 dark:text-muted-foreground">Issued by {viewing.issuer}</p>
+                      <p className="mt-6 text-xs text-slate-700 dark:text-muted-foreground">
+                        Certificate preview placeholder. Upload the actual PDF/JPG/PNG file to display it here.
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -524,7 +560,7 @@ function Certifications() {
   );
 }
 
-function CategoryCarousel({ category, onView }: { category: { name: string; issuer: string; items: string[] }; onView: (title: string) => void }) {
+function CategoryCarousel({ category, onView }: { category: { name: string; issuer: string; items: Array<string | { title: string; asset?: string }> }; onView: (item: string | { title: string; asset?: string }) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const scroll = (dir: number) => {
     ref.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
@@ -542,16 +578,19 @@ function CategoryCarousel({ category, onView }: { category: { name: string; issu
         </div>
       </div>
       <div ref={ref} className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:thin]">
-        {category.items.map((title) => (
-          <Card key={title} className="flex w-72 shrink-0 snap-start flex-col p-5 transition-shadow hover:shadow-elegant">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/15 text-accent">
-              <Award className="h-5 w-5" />
-            </span>
-            <h4 className="mt-4 line-clamp-3 font-semibold leading-snug">{title}</h4>
-            <p className="mt-2 text-xs text-slate-700 dark:text-muted-foreground">{category.issuer}</p>
-            <Button variant="outline" size="sm" onClick={() => onView(title)} className="mt-auto self-start">View Certificate</Button>
-          </Card>
-        ))}
+        {category.items.map((item) => {
+          const title = typeof item === "string" ? item : item.title;
+          return (
+            <Card key={title} className="flex w-72 shrink-0 snap-start flex-col p-5 transition-shadow hover:shadow-elegant">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/15 text-accent">
+                <Award className="h-5 w-5" />
+              </span>
+              <h4 className="mt-4 line-clamp-3 font-semibold leading-snug">{title}</h4>
+              <p className="mt-2 text-xs text-slate-700 dark:text-muted-foreground">{category.issuer}</p>
+              <Button variant="outline" size="sm" onClick={() => onView(item)} className="mt-auto self-start">View Certificate</Button>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
