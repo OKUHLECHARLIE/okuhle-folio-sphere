@@ -14,9 +14,9 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { z } from "zod";
-import profileAsset from "@/assets/okuhle-profile.jpg.asset.json";
+import profileImg from "@/assets/Picture.jpg";
 
-const profileUrl = profileAsset.url;
+const profileUrl = profileImg;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -84,7 +84,7 @@ function Portfolio() {
       <div className="fixed inset-0 grid place-items-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-accent" />
-          <p className="text-sm text-muted-foreground">Loading portfolio…</p>
+          <p className="text-sm text-slate-700 dark:text-muted-foreground">Loading portfolio…</p>
         </div>
       </div>
     );
@@ -105,7 +105,7 @@ function Portfolio() {
                 key={n.id}
                 onClick={() => goTo(n.id)}
                 className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  active === n.id ? "text-accent" : "text-muted-foreground hover:text-foreground"
+                  active === n.id ? "text-accent" : "text-slate-700 dark:text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {n.label}
@@ -168,17 +168,17 @@ function Hero() {
       <div className="absolute inset-0 -z-10 opacity-40 [background:radial-gradient(60%_50%_at_20%_30%,color-mix(in_oklab,var(--sky)_45%,transparent),transparent),radial-gradient(50%_40%_at_85%_70%,color-mix(in_oklab,var(--sky)_30%,transparent),transparent)]" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
         <div className="text-center lg:text-left animate-fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold text-white">
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-900/25 dark:border-white/25 bg-slate-900/10 dark:bg-white/10 px-3 py-1 text-xs font-semibold text-slate-900 dark:text-white">
             <Sparkles className="h-3.5 w-3.5" /> Available for opportunities
           </span>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-6xl">
             Okuhle Charlie
           </h1>
           <p className="mt-2 text-lg font-bold text-[color:var(--sky)]">CAPACITI Intern</p>
-          <p className="mt-4 font-display text-xl font-semibold italic text-white">
-            “In everything you do, AIM HIGH!”
+          <p className="mt-4 font-display text-xl font-semibold italic text-slate-900 dark:text-white">
+            "In everything you do, AIM HIGH!"
           </p>
-          <p className="mt-6 max-w-xl text-base font-medium leading-relaxed text-white lg:max-w-none">
+          <p className="mt-6 max-w-xl text-base font-medium leading-relaxed text-slate-900 dark:text-white lg:max-w-none">
             Passionate about Artificial Intelligence, Networking, and Digital Transformation.
             I am committed to developing innovative technology solutions that create real-world impact.
           </p>
@@ -195,7 +195,7 @@ function Hero() {
 
         <div className="relative mx-auto flex w-full max-w-md justify-center lg:max-w-none lg:justify-end animate-fade-up">
           <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-[color:var(--sky)]/40 to-transparent blur-2xl" />
-          <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] border-4 border-white/20 shadow-elegant lg:max-w-md">
+          <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] border-4 border-slate-900/20 dark:border-white/20 shadow-elegant lg:max-w-md">
             <img src={profileUrl} alt="Okuhle Charlie" className="h-full w-full object-cover" />
           </div>
         </div>
@@ -222,7 +222,7 @@ function About() {
           {blocks.map((b) => (
             <Card key={b.title} className="p-6 transition-shadow hover:shadow-elegant">
               <h3 className="text-lg font-bold text-[var(--navy)] dark:text-white">{b.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{b.body}</p>
+              <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-muted-foreground">{b.body}</p>
             </Card>
           ))}
         </div>
@@ -258,7 +258,7 @@ function Education() {
                   </span>
                   <p className="text-xs font-semibold uppercase tracking-wider text-accent">{t.years}</p>
                   <h4 className="mt-1 text-lg font-bold">{t.school}</h4>
-                  <p className="text-sm text-muted-foreground">{t.degree}</p>
+                  <p className="text-sm text-slate-700 dark:text-muted-foreground">{t.degree}</p>
                 </li>
               ))}
             </ol>
@@ -274,7 +274,7 @@ function Education() {
                   </span>
                   <div className="min-w-0">
                     <h4 className="font-semibold">{a.title}</h4>
-                    <p className="mt-1 text-sm text-muted-foreground">{a.body}</p>
+                    <p className="mt-1 text-sm text-slate-700 dark:text-muted-foreground">{a.body}</p>
                   </div>
                 </Card>
               ))}
@@ -299,14 +299,14 @@ function Experience() {
             </span>
             <h3 className="mt-5 text-xl font-bold">Intern</h3>
             <p className="mt-1 text-accent font-semibold">CAPACITI</p>
-            <p className="mt-2 text-sm text-muted-foreground">April 2026 – Present</p>
-            <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-sm text-slate-700 dark:text-muted-foreground">April 2026 – Present</p>
+            <div className="mt-4 flex items-center gap-2 text-xs text-slate-700 dark:text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" /> Current role
             </div>
           </Card>
           <Card className="p-6 lg:col-span-2">
             <h3 className="text-lg font-bold">Responsibilities</h3>
-            <p className="mt-4 leading-relaxed text-muted-foreground">
+            <p className="mt-4 leading-relaxed text-slate-700 dark:text-muted-foreground">
               Enrolled AI Bootcamp and Professional Development courses where I learnt some AI skills.
               Machine Learning Fundamentals, Prompt Engineering, AI Application Development, and Responsible AI Practices.
               Professional Communication, Team Collaboration, Time Management, Problem-Solving, Workplace Professionalism.
@@ -361,7 +361,7 @@ function Projects() {
               </span>
               <h3 className="mt-5 text-lg font-bold">{p.title}</h3>
               <p className="mt-1 text-sm font-medium text-accent">{p.role}</p>
-              <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{p.overview}</p>
+              <p className="mt-3 line-clamp-3 text-sm text-slate-700 dark:text-muted-foreground">{p.overview}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {p.tools.map((t) => (
                   <span key={t} className="rounded-full bg-accent/15 px-2.5 py-0.5 text-xs font-medium text-accent">{t}</span>
@@ -401,7 +401,7 @@ function Projects() {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-muted-foreground">{label}</p>
       <p className="mt-1 text-foreground">{value}</p>
     </div>
   );
@@ -495,7 +495,7 @@ function Certifications() {
               <div className="flex items-center justify-between gap-4 border-b border-border bg-muted/50 px-5 py-3">
                 <div className="min-w-0">
                   <p className="truncate font-semibold">{viewing.title}</p>
-                  <p className="truncate text-xs text-muted-foreground">{viewing.issuer}</p>
+                  <p className="truncate text-xs text-slate-700 dark:text-muted-foreground">{viewing.issuer}</p>
                 </div>
                 <a
                   href={`data:text/plain;charset=utf-8,${encodeURIComponent(`${viewing.title} — ${viewing.issuer}\n\nCertificate file placeholder.`)}`}
@@ -510,8 +510,8 @@ function Certifications() {
                 <div className="w-full max-w-xl rounded-xl border-2 border-dashed border-border bg-card p-10 text-center">
                   <FileText className="mx-auto h-12 w-12 text-accent" />
                   <h4 className="mt-4 font-display text-xl font-bold">{viewing.title}</h4>
-                  <p className="mt-1 text-sm text-muted-foreground">Issued by {viewing.issuer}</p>
-                  <p className="mt-6 text-xs text-muted-foreground">
+                  <p className="mt-1 text-sm text-slate-700 dark:text-muted-foreground">Issued by {viewing.issuer}</p>
+                  <p className="mt-6 text-xs text-slate-700 dark:text-muted-foreground">
                     Certificate preview placeholder. Upload the actual PDF/JPG/PNG file to display it here.
                   </p>
                 </div>
@@ -534,7 +534,7 @@ function CategoryCarousel({ category, onView }: { category: { name: string; issu
       <div className="mb-4 flex items-end justify-between gap-4">
         <div className="min-w-0">
           <h3 className="font-display text-xl font-bold sm:text-2xl">{category.name}</h3>
-          <p className="text-sm text-muted-foreground">{category.items.length} certificate{category.items.length > 1 ? "s" : ""} · {category.issuer}</p>
+          <p className="text-sm text-slate-700 dark:text-muted-foreground">{category.items.length} certificate{category.items.length > 1 ? "s" : ""} · {category.issuer}</p>
         </div>
         <div className="hidden gap-2 sm:flex">
           <button onClick={() => scroll(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-border hover:bg-muted" aria-label="Previous"><ChevronLeft className="h-4 w-4" /></button>
@@ -548,7 +548,7 @@ function CategoryCarousel({ category, onView }: { category: { name: string; issu
               <Award className="h-5 w-5" />
             </span>
             <h4 className="mt-4 line-clamp-3 font-semibold leading-snug">{title}</h4>
-            <p className="mt-2 text-xs text-muted-foreground">{category.issuer}</p>
+            <p className="mt-2 text-xs text-slate-700 dark:text-muted-foreground">{category.issuer}</p>
             <Button variant="outline" size="sm" onClick={() => onView(title)} className="mt-auto self-start">View Certificate</Button>
           </Card>
         ))}
@@ -637,7 +637,7 @@ function Contact() {
                   <c.icon className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-muted-foreground">{c.label}</p>
                   <p className="truncate font-medium group-hover:text-accent">{c.value}</p>
                 </div>
               </a>
