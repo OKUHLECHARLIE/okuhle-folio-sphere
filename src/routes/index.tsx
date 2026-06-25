@@ -17,13 +17,23 @@ import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
 
 const profileUrl = profileImg;
-const certificateAssetModules = (typeof import.meta.globEager === "function"
-  ? import.meta.globEager("../assets/*.{pdf,jpg,png}")
+let certificateAssetModules = (typeof import.meta.globEager === "function"
+  ? import.meta.globEager("../assets/**")
   : typeof import.meta.glob === "function"
-  ? import.meta.glob("../assets/*.{pdf,jpg,png}", { eager: true })
+  ? import.meta.glob("../assets/**", { eager: true })
   : {}) as Record<string, { default: string }>;
+if (Object.keys(certificateAssetModules).length === 0 && typeof import.meta.globEager === "function") {
+  // fallback to absolute path pattern if relative pattern didn't match in this environment
+  certificateAssetModules = import.meta.globEager("/src/assets/**") as Record<string, { default: string }>;
+}
 const certificateAssetUrls = Object.fromEntries(
-  Object.entries(certificateAssetModules).map(([path, mod]) => [path.split("/").pop()!, mod.default])
+  Object.entries(certificateAssetModules)
+    .map(([path, mod]) => {
+      const file = path.split(/[/\\\\]/).pop()!;
+      return { file, url: mod.default };
+    })
+    .filter(({ file }) => /\.(pdf|jpe?g|png)$/i.test(file))
+    .map(({ file, url }) => [file.toLowerCase(), url]),
 ) as Record<string, string>;
 
 export const Route = createFileRoute("/")({
@@ -483,7 +493,13 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: Array<string | { t
 
 function Certifications() {
   const [viewing, setViewing] = useState<{ title: string; issuer: string; asset?: string } | null>(null);
-  const assetUrl = viewing?.asset ? certificateAssetUrls[viewing.asset] : undefined;
+  // lookup using lowercased asset name to match normalized keys; if not present,
+  // fall back to the conventional Vite dev URL `/src/assets/<name>` so assets
+  // served from `src/assets` are still reachable in dev.
+  const assetUrl = viewing?.asset
+    ? certificateAssetUrls[viewing.asset.toLowerCase()] ?? `/src/assets/${encodeURIComponent(viewing.asset)}`
+    : undefined;
+  const showDebug = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("debug-cert");
   return (
     <section id="certifications" className="section-pad bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -503,6 +519,14 @@ function Certifications() {
           ))}
         </div>
       </div>
+      {showDebug && (
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6">
+          <details className="rounded border p-4">
+            <summary className="cursor-pointer font-semibold">Certificate asset keys (debug)</summary>
+            <pre className="mt-2 max-h-48 overflow-auto text-xs">{JSON.stringify(Object.keys(certificateAssetUrls), null, 2)}</pre>
+          </details>
+        </div>
+      )}
 
       <Dialog open={!!viewing} onOpenChange={(v) => !v && setViewing(null)}>
         <DialogContent className="max-w-3xl p-0 overflow-hidden">
@@ -514,16 +538,23 @@ function Certifications() {
                   <p className="truncate text-xs text-slate-700 dark:text-muted-foreground">{viewing.issuer}</p>
                 </div>
                 {assetUrl ? (
-                  <a
-                    href={assetUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    download={viewing?.asset}
-                    className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
-                    aria-label="Download certificate"
-                  >
-                    <Download className="h-4 w-4" /> Download
-                  </a>
+                  (() => {
+                    const isPdf = assetUrl.toLowerCase().endsWith(".pdf");
+                    // For PDFs prefer opening in a new tab so browser can preview inline.
+                    // Only include `download` for non-PDF assets to avoid forcing a download.
+                    return (
+                      <a
+                        href={assetUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        {...(!isPdf ? { download: viewing?.asset } : {})}
+                        className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
+                        aria-label="Download certificate"
+                      >
+                        <Download className="h-4 w-4" /> Download
+                      </a>
+                    );
+                  })()
                 ) : (
                   <a
                     href={`data:text/plain;charset=utf-8,${encodeURIComponent(`${viewing?.title} — ${viewing?.issuer}\n\nCertificate file placeholder.`)}`}
@@ -552,6 +583,9 @@ function Certifications() {
                       <p className="mt-6 text-xs text-slate-700 dark:text-muted-foreground">
                         Certificate preview placeholder. Upload the actual PDF/JPG/PNG file to display it here.
                       </p>
+                      {viewing?.asset && (
+                        <p className="mt-3 text-xs text-destructive">Asset not found: {viewing.asset}</p>
+                      )}
                     </>
                   )}
                 </div>
