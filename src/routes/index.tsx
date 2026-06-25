@@ -656,7 +656,7 @@ function Footer({ goTo }: { goTo: (id: string) => void }) {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--sky)]">Quick Links</p>
-          <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
+          <ul className="mt-4 space-y-2 text-sm">
             {NAV.map((n) => (
               <li key={n.id}><button onClick={() => goTo(n.id)} className="text-white/80 hover:text-white">{n.label}</button></li>
             ))}
