@@ -17,7 +17,11 @@ import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
 
 const profileUrl = profileImg;
-const certificateAssetModules = import.meta.globEager("../assets/*.{pdf,jpg,png}") as Record<string, { default: string }>;
+const certificateAssetModules = (typeof import.meta.globEager === "function"
+  ? import.meta.globEager("../assets/*.{pdf,jpg,png}")
+  : typeof import.meta.glob === "function"
+  ? import.meta.glob("../assets/*.{pdf,jpg,png}", { eager: true })
+  : {}) as Record<string, { default: string }>;
 const certificateAssetUrls = Object.fromEntries(
   Object.entries(certificateAssetModules).map(([path, mod]) => [path.split("/").pop()!, mod.default])
 ) as Record<string, string>;
