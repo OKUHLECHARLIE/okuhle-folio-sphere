@@ -15,17 +15,15 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
+import Certificates from "@/components/Certificates";
 
 const profileUrl = profileImg;
-let certificateAssetModules = (typeof import.meta.globEager === "function"
-  ? import.meta.globEager("../assets/**")
-  : typeof import.meta.glob === "function"
-  ? import.meta.glob("../assets/**", { eager: true })
+const certificateAssetModules = (typeof import.meta.glob === "function"
+  ? {
+      ...import.meta.glob("../assets/**", { eager: true }),
+      ...import.meta.glob("/src/assets/**", { eager: true }),
+    }
   : {}) as Record<string, { default: string }>;
-if (Object.keys(certificateAssetModules).length === 0 && typeof import.meta.globEager === "function") {
-  // fallback to absolute path pattern if relative pattern didn't match in this environment
-  certificateAssetModules = import.meta.globEager("/src/assets/**") as Record<string, { default: string }>;
-}
 const certificateAssetUrls = Object.fromEntries(
   Object.entries(certificateAssetModules)
     .map(([path, mod]) => {
@@ -159,7 +157,7 @@ function Portfolio() {
         <Education />
         <Experience />
         <Projects />
-        <Certifications />
+        <Certificates />
         <Contact />
       </main>
 
@@ -471,7 +469,7 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: Array<string | { t
       "Discover the Art of Prompting",
       "Use AI Responsibly",
       "Stay Ahead of the AI Curve",
-      { title: "Google AI Essentials", asset: "AI Essentials.pdf" },
+      { title: "Google AI Essentials", asset: "Google AI Essentials.pdf" },
     ],
   },
   {
@@ -493,12 +491,7 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: Array<string | { t
 
 function Certifications() {
   const [viewing, setViewing] = useState<{ title: string; issuer: string; asset?: string } | null>(null);
-  // lookup using lowercased asset name to match normalized keys; if not present,
-  // fall back to the conventional Vite dev URL `/src/assets/<name>` so assets
-  // served from `src/assets` are still reachable in dev.
-  const assetUrl = viewing?.asset
-    ? certificateAssetUrls[viewing.asset.toLowerCase()] ?? `/src/assets/${encodeURIComponent(viewing.asset)}`
-    : undefined;
+  const assetUrl = viewing?.asset ? certificateAssetUrls[viewing.asset.toLowerCase()] : undefined;
   const showDebug = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("debug-cert");
   return (
     <section id="certifications" className="section-pad bg-background">
