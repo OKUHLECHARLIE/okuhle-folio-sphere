@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
+import cvPdf from "@/assets/Okuhle Charlie CV.pdf";
 import Certificates from "@/components/Certificates";
 
 const profileUrl = profileImg;
@@ -200,8 +201,8 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
             <a
-              href="/Okuhle-Charlie-CV.txt"
-              download
+              href={cvPdf}
+              download="Okuhle Charlie CV.pdf"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-[var(--sky)] px-6 text-sm font-bold text-[var(--navy)] shadow-glow transition-transform hover:scale-[1.02]"
             >
               <Download className="h-4 w-4" /> Download CV
