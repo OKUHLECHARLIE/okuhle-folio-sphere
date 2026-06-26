@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { JSX } from "react";
 import { useEffect, useMemo, useState } from "react";
 import {
   Award, ArrowUp, Download, Github, GraduationCap, Linkedin, Mail, MapPin,
