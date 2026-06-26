@@ -1,13 +1,25 @@
-/* Minimal, responsive card styles for certificates page */
-.certificates {
-  padding: 0;
-  max-width: none;
-  margin: 0;
+/* Certificates page styling aligned with the site's section cards */
+.cert-categories {
+  display: grid;
+  gap: 2rem;
 }
 
-.certificates-heading {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
+.cert-category-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cert-category-title {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--navy);
+}
+
+.cert-category-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6b7280;
 }
 
 .cert-categories {
@@ -38,17 +50,6 @@
   color: #6b7280;
 }
 
-.cert-card {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 1px 2px rgba(16,24,40,0.03);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .cert-actions {
   display: flex;
   gap: 0.5rem;
@@ -56,8 +57,13 @@
 
 .cert-title {
   font-size: 1rem;
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 1rem 0;
   color: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn { background: #e6eef8; color: #0b1220; }
+  .btn-outline { color: #e6eef8; border-color: rgba(255,255,255,0.08); }
 }
 
 .btn {
@@ -85,7 +91,7 @@
 .cert-carousel {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(260px, 1fr);
+  grid-auto-columns: minmax(240px, 1fr);
   gap: 1rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;

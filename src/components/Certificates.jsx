@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import certificates from '../lib/certificates';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Card } from '@/components/ui/card';
 import '../styles/certificates.css';
 
 const CERT_CATEGORIES = [
@@ -99,26 +100,32 @@ export default function Certificates() {
   return (
     <section id="certifications" className="section-pad bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h1 className="certificates-heading">Certificates</h1>
-        <div className="cert-categories">
-        {CERT_CATEGORIES.map((category) => (
-          <div key={category.name} className="cert-category">
-            <div className="cert-category-heading">
-              <div>
-                <h2 className="cert-category-title">{category.name}</h2>
-                <p className="cert-category-subtitle">{category.items.length} certificate{category.items.length > 1 ? 's' : ''} · {category.issuer}</p>
+        <div className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Certifications</p>
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">
+            Continuous learning across AI, Networks & professional skills.
+          </h2>
+          <div className="mt-4 h-1 w-16 rounded-full bg-gradient-to-r from-[var(--navy)] to-[color:var(--sky)]" />
+        </div>
+        <div className="mt-12 space-y-14 cert-categories">
+          {CERT_CATEGORIES.map((category) => (
+            <div key={category.name} className="cert-category space-y-6">
+              <div className="cert-category-heading">
+                <div>
+                  <h3 className="cert-category-title">{category.name}</h3>
+                  <p className="cert-category-subtitle">{category.items.length} certificate{category.items.length > 1 ? 's' : ''} · {category.issuer}</p>
+                </div>
               </div>
-            </div>
-            <div className="cert-carousel">
-              {category.items.map((item) => {
+              <div className="cert-carousel">
+                {category.items.map((item) => {
                 const title = typeof item === 'string' ? item : item.title;
                 const asset = typeof item === 'string' ? undefined : item.asset;
                 const externalLink = typeof item === 'string' ? undefined : item.externalLink;
                 const url = getFileUrl(asset, title);
                 return (
-                  <article key={title} className="cert-card cert-carousel-card">
+                  <Card key={title} className="cert-carousel-card group flex flex-col p-6 transition-shadow hover:shadow-elegant">
                     <h3 className="cert-title">{title}</h3>
-                    <div className="cert-actions">
+                    <div className="cert-actions mt-auto">
                       <button
                         type="button"
                         className="btn"
@@ -133,7 +140,7 @@ export default function Certificates() {
                         View Certificate
                       </button>
                     </div>
-                  </article>
+                  </Card>
                 );
               })}
             </div>
