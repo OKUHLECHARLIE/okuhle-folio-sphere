@@ -81,12 +81,11 @@ export default function Certificates() {
 
   const normalizeKey = (value) =>
     String(value)
+      .toLowerCase()
       .replace(/\.pdf$/i, '')
-      .replace(/[:.,]/g, '')
-      .replace(/[-_]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .toLowerCase();
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9]+/g, '');
+
 
   const fileMap = Object.fromEntries(
     certificates.map((cert) => [normalizeKey(cert.fileName), cert.file])
