@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Award, ArrowUp, Download, Github, GraduationCap, Linkedin, Mail, MapPin,
   Menu, Moon, Phone, Sun, X, Briefcase, Sparkles, Network, Cpu,
-  ChevronLeft, ChevronRight, CheckCircle2, FileText,
+  CheckCircle2, FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -462,7 +462,7 @@ const CERT_CATEGORIES: { name: string; issuer: string; items: Array<string | { t
     ],
   },
   {
-    name: "Google AI Essentials Specialization",
+    name: "Google AI Essentials Specializations",
     issuer: "Google",
     items: [
       "Introduction to AI",
@@ -593,10 +593,6 @@ function Certifications() {
 }
 
 function CategoryCarousel({ category, onView }: { category: { name: string; issuer: string; items: Array<string | { title: string; asset?: string }> }; onView: (item: string | { title: string; asset?: string }) => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const scroll = (dir: number) => {
-    ref.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
-  };
   return (
     <div>
       <div className="mb-4 flex items-end justify-between gap-4">
@@ -604,12 +600,8 @@ function CategoryCarousel({ category, onView }: { category: { name: string; issu
           <h3 className="font-display text-xl font-bold sm:text-2xl">{category.name}</h3>
           <p className="text-sm text-slate-700 dark:text-muted-foreground">{category.items.length} certificate{category.items.length > 1 ? "s" : ""} · {category.issuer}</p>
         </div>
-        <div className="hidden gap-2 sm:flex">
-          <button onClick={() => scroll(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-border hover:bg-muted" aria-label="Previous"><ChevronLeft className="h-4 w-4" /></button>
-          <button onClick={() => scroll(1)} className="grid h-9 w-9 place-items-center rounded-full border border-border hover:bg-muted" aria-label="Next"><ChevronRight className="h-4 w-4" /></button>
-        </div>
       </div>
-      <div ref={ref} className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:thin]">
+      <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:thin]">
         {category.items.map((item) => {
           const title = typeof item === "string" ? item : item.title;
           return (
