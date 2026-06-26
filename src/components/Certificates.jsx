@@ -26,12 +26,18 @@ const CERT_CATEGORIES = [
     items: [
       { title: 'Generative AI: Prompt Engineering Basics', asset: 'Generative AI_Prompt Engineering Basics.pdf' },
       { title: 'AI For Everyone', asset: 'AI For Everyone.pdf' },
-      { title: 'Introduction to Artificial Intelligence' },
+      {
+        title: 'Introduction to Artificial Intelligence',
+        externalLink: 'https://coursera.org/share/ff275a8253c2bafdccbd5fef479c3258',
+      },
       { title: 'Introduction to Generative AI', asset: 'Introduction to Generative AI.pdf' },
       { title: 'AI Essentials', asset: 'AI Essentials.pdf' },
       { title: 'Generative AI with Large Language Models', asset: 'Generative AI with Large Language Models.pdf' },
       { title: 'AI Foundations: Prompt Engineering with ChatGPT', asset: 'AI Foundations Prompt Engineering with ChatGPT.pdf' },
-      { title: 'Python for Data Science, AI and Development' },
+      {
+        title: 'Python for Data Science, AI and Development',
+        externalLink: 'https://coursera.org/share/ff275a8253c2bafdccbd5fef479c3258',
+      },
       { title: 'Supervised Machine Learning: Regression and Classification', asset: 'Supervised Machine Learning Regression and Classification.pdf' },
       { title: 'Advanced Learning Algorithms', asset: 'Advanced Learning Algorithms.pdf' },
       { title: 'Unsupervised Learning, Recommenders, Reinforcement Learning', asset: 'Unsupervised Learning, Recommenders, Reinforcement Learning.pdf' },
@@ -43,11 +49,11 @@ const CERT_CATEGORIES = [
     name: 'Google AI Essentials Specializations',
     issuer: 'Google',
     items: [
-      { title: 'Introduction to AI' },
-      { title: 'Maximize Productivity with AI Tools' },
-      { title: 'Discover the Art of Prompting' },
-      { title: 'Use AI Responsibly' },
-      { title: 'Stay Ahead of the AI Curve' },
+      { title: 'Introduction to AI', asset: 'Introduction to AI.pdf' },
+      { title: 'Maximize Productivity with AI Tools', asset: 'Maximize Productivity With AI Tools.pdf' },
+      { title: 'Discover the Art of Prompting', asset: 'Discover the Art of Prompting.pdf' },
+      { title: 'Use AI Responsibly', asset: 'Use AI Responsibly.pdf' },
+      { title: 'Stay Ahead of the AI Curve', asset: 'Stay Ahead of the AI Curve.pdf' },
       { title: 'Google AI Essentials', asset: 'Google AI Essentials.pdf' },
     ],
   },
@@ -55,17 +61,17 @@ const CERT_CATEGORIES = [
     name: 'School Certificate',
     issuer: 'Nelson Mandela University',
     items: [
-      { title: 'Diploma in Information Technology' },
+      { title: 'Diploma in Information Technology', asset: 'Diploma in Information Technology.pdf' },
     ],
   },
   {
     name: 'CCNA',
     issuer: 'Cisco Networking Academy',
     items: [
-      { title: 'Enterprise Networking, Security and Automation' },
-      { title: 'Switching, Routing and Wireless Essentials' },
-      { title: 'Introduction to Networks' },
-      { title: 'Introduction to Cybersecurity' },
+      { title: 'Enterprise Networking, Security and Automation', asset: 'Enterprise Networking Security and Automation.pdf' },
+      { title: 'Switching, Routing and Wireless Essentials', asset: 'Switching Routing and Wireless Essentials.pdf' },
+      { title: 'Introduction to Networks', asset: 'Introduction to Networks.pdf' },
+      { title: 'Introduction to Cybersecurity', asset: 'Introduction to Cybersecurity.pdf' },
     ],
   },
 ];
@@ -108,6 +114,7 @@ export default function Certificates() {
               {category.items.map((item) => {
                 const title = typeof item === 'string' ? item : item.title;
                 const asset = typeof item === 'string' ? undefined : item.asset;
+                const externalLink = typeof item === 'string' ? undefined : item.externalLink;
                 const url = getFileUrl(asset, title);
                 return (
                   <article key={title} className="cert-card cert-carousel-card">
@@ -116,7 +123,13 @@ export default function Certificates() {
                       <button
                         type="button"
                         className="btn"
-                        onClick={() => setViewing({ title, issuer: category.issuer, asset, file: url })}
+                        onClick={() => {
+                          if (externalLink) {
+                            window.open(externalLink, '_blank', 'noopener,noreferrer');
+                            return;
+                          }
+                          setViewing({ title, issuer: category.issuer, asset, file: url });
+                        }}
                       >
                         View Certificate
                       </button>
