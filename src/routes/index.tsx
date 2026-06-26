@@ -15,10 +15,20 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { z } from "zod";
 import profileImg from "@/assets/Picture.jpg";
+import airportProjectImg from "@/assets/Network.PNG";
 import cvPdf from "@/assets/Okuhle Charlie CV.pdf";
 import Certificates from "@/components/Certificates";
 
 const profileUrl = profileImg;
+const ProjectPictureIcon = ({ className, ...props }: JSX.IntrinsicElements['img']) => (
+  <img
+    {...props}
+    src={airportProjectImg}
+    alt="Airport Network Design and Simulation"
+    className={`${className ?? ''} rounded`}
+  />
+);
+
 const certificateAssetModules = (typeof import.meta.glob === "function"
   ? {
       ...import.meta.glob("../assets/**", { eager: true }),
@@ -339,7 +349,7 @@ function Experience() {
 /* ───────────── PROJECTS ───────────── */
 const PROJECTS = [
   {
-    icon: Network,
+    icon: ProjectPictureIcon,
     title: "Airport Network Design and Simulation",
     role: "Student Network Engineer",
     tools: ["Cisco Packet Tracer"],
