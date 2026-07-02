@@ -644,7 +644,7 @@ function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const r = contactSchema.safeParse(form);
     if (!r.success) {
@@ -653,13 +653,37 @@ function Contact() {
       setErrors(errs);
       return;
     }
+
     setErrors({});
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const payload = new FormData();
+      payload.append("name", form.name);
+      payload.append("email", form.email);
+      payload.append("subject", form.subject);
+      payload.append("message", form.message);
+      payload.append("_replyto", form.email);
+      payload.append("_subject", `[Portfolio contact] ${form.subject}`);
+      payload.append("_captcha", "false");
+
+      const response = await fetch("https://formsubmit.co/ajax/charlieokuhle4@gmail.com", {
+        method: "POST",
+        body: payload,
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.message || "Failed to send message");
+      }
+
       toast.success("Message sent! Okuhle will be in touch soon.");
       setForm({ name: "", email: "", subject: "", message: "" });
-    }, 800);
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to send your message. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contacts = [
